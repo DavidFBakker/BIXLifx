@@ -1,0 +1,90 @@
+﻿<Window
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:BIXLifxBatchCreator"
+    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" x:Class="BIXLifxBatchCreator.MainWindow"
+    mc:Ignorable="d"
+    DataContext="{Binding RelativeSource={RelativeSource Self}}"
+    Title="MainWindow" Height="500" Width="900">
+    <Window.Resources>
+        <local:NameToColor x:Key="NameToColor" />
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <telerik:RadListBox Grid.Column="0" SelectionChanged="LstLights_OnSelectionChanged" x:Name="lstLights"
+                            HorizontalAlignment="Left" MinWidth="100" Height="Auto" Margin="10"
+                            VerticalAlignment="Stretch" ItemsSource="{Binding LightBulbs}" DisplayMemberPath="Label"
+                            SelectionMode="Multiple" />
+
+        
+
+        <telerik:RadListBox Grid.Column="1"  SelectionChanged="LstColor_OnSelectionChanged" x:Name="lstColor"
+                            HorizontalAlignment="Left" Height="Auto" MinWidth="100" Margin="10" CanAutocompleteSelectItems="True" IsTextSearchEnabled="True"
+                            VerticalAlignment="Top" ItemsSource="{Binding Colors}" SelectionMode="Single" TextPath="Name" >
+            <telerik:RadListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Vertical">
+                        <Label Content="{Binding Name}" />
+                        <Rectangle Fill="{Binding Name, Converter={StaticResource NameToColor}}" Width="80" Height="20" />
+                    </StackPanel>
+                </DataTemplate>
+            </telerik:RadListBox.ItemTemplate>
+        </telerik:RadListBox>
+            
+        
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="160" />
+                <RowDefinition Height="140" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Stretch" Margin="10" MinWidth="200" VerticalAlignment="Top">
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Light Label " Width="100"/>
+                    <TextBox x:Name="txtLabel" MinWidth="40" Text="Kitchen" VerticalAlignment="Center" TextChanged="TxtLabel_OnTextChanged" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Light Match " Width="100"/>
+                    <TextBox x:Name="txtMatch" MinWidth="40" Text="Kitchen" VerticalAlignment="Center"  />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Dim" Width="100"/>
+                <TextBox x:Name="txtDim" MinWidth="40" Text="0" VerticalAlignment="Center"
+                         TextChanged="TxtDim_OnTextChanged" />
+                    <Button Content="Clear Colors" Click="ButtonBase_OnClick" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                <CheckBox x:Name="chkPower" Content="Power" VerticalAlignment="Center" IsThreeState="True" Click="ChkPower_OnClick" />
+                <CheckBox x:Name="chkMatch" Content="Use Match" IsChecked="True" VerticalAlignment="Center" IsThreeState="False" Click="ChkMatch_OnClick" />
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Left" Margin="10" VerticalAlignment="Top">
+                <TextBox Text="" x:Name="txtCommand" HorizontalAlignment="Stretch" IsReadOnly="True" MouseDoubleClick="TxtCommand_OnMouseDoubleClick"  />
+                <Button Content="Save" Click="Button_Click"  />
+                <TextBox Text="" x:Name="txtCommands" HorizontalAlignment="Stretch" IsReadOnly="True" MouseDoubleClick="TxtCommands_OnMouseDoubleClick"  />
+            </StackPanel>
+            <StackPanel Grid.Row="2" Orientation="Vertical" HorizontalAlignment="Left" Margin="10" VerticalAlignment="Top">
+                <telerik:RadListBox x:Name="lstCommands"  ItemsSource="{Binding LIFXCommands}" MinWidth="40" >
+                    <telerik:RadListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="{Binding Label}" MouseDoubleClick="Label_MouseDoubleClick" />
+                                <Label Content="{Binding Power}" />
+                                <Label Content="{Binding Color}" Background="{Binding Color, Converter={StaticResource NameToColor}}" />
+                                <Label Content="{Binding Dim}" />
+                                </StackPanel>
+                        </DataTemplate>
+                    </telerik:RadListBox.ItemTemplate>
+                </telerik:RadListBox>
+            </StackPanel>
+
+        </Grid>
+    </Grid>
+</Window>
