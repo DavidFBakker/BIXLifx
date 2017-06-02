@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -213,7 +214,6 @@ namespace BIXLifxBatchCreator
             Clipboard.SetText(txtCommand.Text);
         }
 
-
         private void ChkMatch_OnClick(object sender, RoutedEventArgs e)
         {
             BuildCommand();
@@ -256,5 +256,30 @@ namespace BIXLifxBatchCreator
         {
             lstColor.SelectedItem = null;
         }
+
+        private void TestButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (!String.IsNullOrWhiteSpace(txtCommands.Text))
+            {
+                 RunTask(txtCommands.Text);
+                return;
+            }
+
+            if (!String.IsNullOrWhiteSpace(txtCommand.Text))
+            {
+                 RunTask(txtCommand.Text);
+                return;
+                }
+            }
+        private  void RunTask(string arg)
+        {
+            var page = $"{txtBaseUrl.Text}CMDS={arg}";
+            // Console.WriteLine($"Running: {page}");
+            var response = Client.GetAsync(page).Result;
+            //  var res = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            // Console.WriteLine(res);
+        }
+
     }
 }

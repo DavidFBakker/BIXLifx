@@ -49,6 +49,8 @@
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Light Label " Width="100"/>
                     <TextBox x:Name="txtLabel" MinWidth="40" Text="Kitchen" VerticalAlignment="Center" TextChanged="TxtLabel_OnTextChanged" />
+                    <Label Content="Base Url " Width="100"/>
+                    <TextBox x:Name="txtBaseUrl" MinWidth="40" Text="http://192.168.85.12:9105/?" VerticalAlignment="Center"  />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Light Match " Width="100"/>
@@ -62,7 +64,8 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                 <CheckBox x:Name="chkPower" Content="Power" VerticalAlignment="Center" IsThreeState="True" Click="ChkPower_OnClick" />
-                <CheckBox x:Name="chkMatch" Content="Use Match" IsChecked="True" VerticalAlignment="Center" IsThreeState="False" Click="ChkMatch_OnClick" />
+                <CheckBox x:Name="chkMatch" Content="Use Group" IsChecked="True" VerticalAlignment="Center" IsThreeState="False" Click="ChkMatch_OnClick" />
+                    <Button Content="Test" Click="TestButtonBase_OnClick" />
                 </StackPanel>
             </StackPanel>
             <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Left" Margin="10" VerticalAlignment="Top">
