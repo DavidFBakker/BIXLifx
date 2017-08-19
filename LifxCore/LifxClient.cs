@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -20,7 +21,7 @@ namespace LifxCore
         public LifxClient(string addressStartWith = "192.168.85")
         {
             Log.Info("Starting LifxClient");
-
+            taskCompletions=new Dictionary<uint, Action<LifxResponse>>();
             var su = NetworkInterface.GetAllNetworkInterfaces()
                 .SelectMany(i => i.GetIPProperties().UnicastAddresses).Where(a => a.Address != null).ToList();
 

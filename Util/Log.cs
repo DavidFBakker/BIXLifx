@@ -14,6 +14,7 @@ namespace Util
         private static readonly ILogger Logger = CreateLogger();
         public static int MaxMessages = MaxMessagesDef;
         private static readonly List<string> ValidMessages = new List<string> {"ERROR", "DEBUG", "BULB", "INFO"};
+        private static LinkedList<string> _messages;
 
         static Log()
         {
@@ -22,7 +23,16 @@ namespace Util
           
         }
 
-        public static LinkedList<string> Messages { get; set; }
+        public static LinkedList<string> Messages
+        {
+            get
+            {
+                if (_messages == null)
+                    _messages =new LinkedList<string>();
+                return _messages;
+            }
+            set { _messages = value; }
+        }
 
         public static ILoggerFactory LoggerFactory
         {
@@ -92,12 +102,13 @@ namespace Util
 
         private static void AddMessage(string message)
         {
-            if (message == null)
+            if (message == null || Messages==null || Messages.Count < 1)
                 return;
 
             lock (message)
             {
                 MaxMessages = Config.GetAppSetting("MaxMessages", MaxMessagesDef);
+                
                 if (Messages.Count >= MaxMessages)
                     Messages.RemoveFirst();
 
